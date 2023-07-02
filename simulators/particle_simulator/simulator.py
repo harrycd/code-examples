@@ -44,7 +44,7 @@ class Simulator(ABC):
             plt.show()
         else:
             writervideo = animation.FFMpegWriter(fps=60)
-            anim.save('particle.mp4', writer=writervideo)
+            anim.save(self.simconf.filename, writer=writervideo)
             plt.close()
 
     def check_setup(self):
@@ -63,9 +63,15 @@ class Simulator(ABC):
             layout='constrained'
         )
         ax = fig.add_subplot(111, projection="3d")
+
+        # Uncomment one of the lines below to change the view angle
+        # ax.view_init(elev=90, azim=-90, roll=0)       # top view
+        # ax.view_init(elev=-2, azim=-90, roll=0)       # side view
+        # ax.view_init(elev=-2, azim=0, roll=0)         # side view 2
         ax.set_xlim(xmin=0, xmax=self.simconf.bbox_size)
         ax.set_ylim(ymin=0, ymax=self.simconf.bbox_size)
         ax.set_zlim(zmin=0, zmax=self.simconf.bbox_size)
+
         return fig, ax
 
     def __add_bounding_box(self, ax):
